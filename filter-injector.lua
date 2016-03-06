@@ -12,6 +12,12 @@ end
 
 local function set_filter_formspec(data, meta)
 	local itemname = data.wise_desc.." Filter-Injector"
+	local exmatch_button = ""
+	if data.stackwise then exmatch_button = 
+			fs_helpers.cycling_button(meta, "button[4,3.5;4,1", "exmatch_mode",
+				{"Exact match - off",
+				 "Exact match - on "})
+	end
 	local formspec = "size[8,8.5]"..
 			"item_image[0,0;1,1;pipeworks:"..data.name.."]"..
 			"label[1,0;"..minetest.formspec_escape(itemname).."]"..
@@ -21,9 +27,7 @@ local function set_filter_formspec(data, meta)
 				{"Sequence slots by Priority",
 				 "Sequence slots Randomly",
 				 "Sequence slots by Rotation"})..
-			fs_helpers.cycling_button(meta, "button[4,3.5;4,1", "exmatch_mode",
-				{"Exact match - off",
-				 "Exact match - on "})..
+			exmatch_button..
 			"list[current_player;main;0,4.5;8,4;]"
 	meta:set_string("formspec", formspec)
 end
